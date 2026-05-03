@@ -1,0 +1,32 @@
+{
+  "expo": {
+    "name": "Cruit",
+    "slug": "cruit",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "scheme": "cruit",
+    "userInterfaceStyle": "dark",
+    "splash": {
+      "resizeMode": "contain",
+      "backgroundColor": "#0f172a"
+    },
+    "ios": {
+      "supportsTablet": false,
+      "bundleIdentifier": "com.cruit.app"
+    },
+    "android": {
+      "adaptiveIcon": {
+        "backgroundColor": "#0f172a"
+      },
+      "package": "com.cruit.app"
+    },
+    "plugins": [
+      "expo-router",
+      "react-native-reanimated"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}
