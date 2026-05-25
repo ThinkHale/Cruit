@@ -94,7 +94,7 @@ export default function EmployerProfileScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#0f172a' },
+  container: { flex: 1, backgroundColor: '#09090b' },
   title: { color: '#fff', fontSize: 22, fontWeight: '900' },
   label: { color: '#94a3b8', fontSize: 13, marginBottom: 6 },
   input: { backgroundColor: '#1e293b', borderWidth: 1, borderColor: '#334155', borderRadius: 14, paddingHorizontal: 14, paddingVertical: 12, color: '#fff', fontSize: 15 },

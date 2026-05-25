@@ -3,7 +3,7 @@ import {
   View, Text, TextInput, TouchableOpacity, StyleSheet, KeyboardAvoidingView, Platform, Alert,
 } from 'react-native';
 import { useRouter } from 'expo-router';
-import { supabase } from '@/lib/supabase';
+import { isSupabaseConfigured, supabase } from '@/lib/supabase';
 
 export default function LoginScreen() {
   const router = useRouter();
@@ -12,6 +12,10 @@ export default function LoginScreen() {
   const [loading, setLoading] = useState(false);
 
   async function handleLogin() {
+    if (!isSupabaseConfigured) {
+      Alert.alert('Supabase required', 'Set EXPO_PUBLIC_SUPABASE_URL and EXPO_PUBLIC_SUPABASE_ANON_KEY before testing login.');
+      return;
+    }
     setLoading(true);
     const { data, error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) {
@@ -60,7 +64,7 @@ export default function LoginScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#0f172a', justifyContent: 'center', padding: 24 },
+  container: { flex: 1, backgroundColor: '#09090b', justifyContent: 'center', padding: 24 },
   logo: { color: '#f97316', fontSize: 36, fontWeight: '900', textAlign: 'center', marginBottom: 8 },
   heading: { color: '#fff', fontSize: 22, fontWeight: '700', textAlign: 'center', marginBottom: 32 },
   input: {

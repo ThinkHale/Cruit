@@ -1,137 +1,133 @@
 import Link from 'next/link';
-import { Zap, DollarSign, Clock, Users } from 'lucide-react';
+import { ArrowRight, BadgeDollarSign, Clock3, MessageCircle, Sparkles, UsersRound, Zap, type LucideIcon } from 'lucide-react';
+import { BrandLockup } from '@/components/Brand';
+import { assetPath } from '@/lib/paths';
+
+const stats = [
+  ['20', 'dollars per post'],
+  ['7', 'day employer trial'],
+  ['0', 'candidate fees'],
+];
+
+const steps = [
+  { title: 'Post or profile', desc: 'Compact job cards and candidate snapshots keep every decision scannable.', icon: UsersRound },
+  { title: 'Swipe with intent', desc: 'Right means interested. Left is saved to history, so nothing is lost.', icon: Zap },
+  { title: 'Match and message', desc: 'Mutual interest opens a chat thread for quick interview scheduling.', icon: MessageCircle },
+];
 
 export default function LandingPage() {
   return (
-    <main className="min-h-screen bg-slate-900 text-white">
-      {/* Nav */}
-      <nav className="flex items-center justify-between px-6 py-4 max-w-5xl mx-auto">
-        <span className="text-2xl font-black text-orange-400 tracking-tight">CRUIT</span>
-        <div className="flex gap-3">
-          <Link href="/auth/login" className="text-slate-300 hover:text-white px-4 py-2 text-sm font-medium">
-            Log in
-          </Link>
-          <Link href="/auth/signup" className="bg-orange-500 hover:bg-orange-600 text-white px-4 py-2 rounded-xl text-sm font-semibold transition-colors">
-            Get Started
-          </Link>
-        </div>
-      </nav>
-
-      {/* Hero */}
-      <section className="max-w-3xl mx-auto text-center px-6 pt-20 pb-16">
-        <div className="inline-block bg-orange-500/15 text-orange-400 text-xs font-bold uppercase tracking-widest px-4 py-2 rounded-full mb-6">
-          Recruiting, reinvented
-        </div>
-        <h1 className="text-5xl md:text-7xl font-black leading-none mb-6">
-          Indeed&nbsp;meets
-          <br />
-          <span className="text-orange-400">Tinder</span>
-        </h1>
-        <p className="text-slate-400 text-lg md:text-xl max-w-xl mx-auto mb-10">
-          Swipe through jobs and candidates in seconds. No bloated postings, no
-          $500 fees. Just fast, affordable recruiting.
-        </p>
-        <div className="flex flex-col sm:flex-row gap-3 justify-center">
-          <Link href="/auth/signup?role=employer" className="bg-orange-500 hover:bg-orange-600 text-white font-bold py-4 px-8 rounded-2xl text-lg transition-colors">
-            Post Jobs Free Trial
-          </Link>
-          <Link href="/auth/signup?role=candidate" className="bg-slate-700 hover:bg-slate-600 text-white font-bold py-4 px-8 rounded-2xl text-lg transition-colors">
-            Find a Job
-          </Link>
-        </div>
-      </section>
-
-      {/* How it works */}
-      <section className="max-w-4xl mx-auto px-6 py-16">
-        <h2 className="text-3xl font-black text-center mb-12">How it works</h2>
-        <div className="grid md:grid-cols-3 gap-6">
-          {[
-            {
-              step: '01',
-              title: 'Create your profile',
-              desc: 'Employers post quick job snippets. Candidates upload a resume snapshot.',
-              icon: Users,
-            },
-            {
-              step: '02',
-              title: 'Swipe to apply or recruit',
-              desc: 'Swipe right to say yes, left to pass. No lengthy applications required.',
-              icon: Zap,
-            },
-            {
-              step: '03',
-              title: 'Match & schedule',
-              desc: "When both parties swipe right it's a match — schedule an interview instantly.",
-              icon: Clock,
-            },
-          ].map(({ step, title, desc, icon: Icon }) => (
-            <div key={step} className="bg-slate-800 rounded-2xl p-6">
-              <div className="text-orange-400 font-black text-xs tracking-widest mb-3">{step}</div>
-              <Icon className="text-orange-400 mb-3" size={28} />
-              <h3 className="font-bold text-lg mb-2">{title}</h3>
-              <p className="text-slate-400 text-sm leading-relaxed">{desc}</p>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Pricing */}
-      <section className="max-w-3xl mx-auto px-6 py-16">
-        <h2 className="text-3xl font-black text-center mb-4">Simple pricing</h2>
-        <p className="text-slate-400 text-center mb-12">
-          A fraction of Indeed or LinkedIn. Candidates always free.
-        </p>
-        <div className="grid md:grid-cols-2 gap-6">
-          <div className="bg-slate-800 rounded-2xl p-8 border border-slate-700">
-            <div className="flex items-center gap-3 mb-4">
-              <DollarSign className="text-orange-400" size={24} />
-              <span className="font-bold text-lg">Pay Per Post</span>
-            </div>
-            <div className="text-4xl font-black mb-1">$20 <span className="text-slate-400 text-lg font-normal">/post</span></div>
-            <p className="text-slate-400 text-sm mb-6">Perfect for occasional hiring needs.</p>
-            <ul className="space-y-2 text-sm text-slate-300">
-              {['1 active job posting', 'Candidate swipe feed', 'Match notifications', 'Swipe history saved'].map(f => (
-                <li key={f} className="flex items-center gap-2">
-                  <span className="text-green-400">✓</span> {f}
-                </li>
-              ))}
-            </ul>
-            <Link href="/auth/signup?role=employer&plan=per_post" className="mt-8 block text-center bg-slate-700 hover:bg-slate-600 text-white font-semibold py-3 rounded-xl transition-colors">
-              Get started
+    <main className="min-h-screen bg-zinc-950 text-white">
+      <section
+        className="relative min-h-[92vh] overflow-hidden bg-cover bg-center"
+        style={{ backgroundImage: `linear-gradient(90deg, rgba(9,9,11,.96) 0%, rgba(9,9,11,.82) 42%, rgba(9,9,11,.4) 100%), url('${assetPath('/brand/hero-preview.png')}')` }}
+      >
+        <nav className="relative z-10 mx-auto flex max-w-6xl items-center justify-between px-5 py-5">
+          <BrandLockup />
+          <div className="flex items-center gap-2">
+            <Link href="/auth/login" className="rounded-xl px-4 py-2 text-sm font-semibold text-zinc-300 transition hover:text-white">
+              Log in
+            </Link>
+            <Link href="/auth/signup" className="rounded-xl bg-white px-4 py-2 text-sm font-bold text-zinc-950 transition hover:bg-orange-100">
+              Start
             </Link>
           </div>
-          <div className="bg-gradient-to-br from-orange-500 to-orange-600 rounded-2xl p-8 relative overflow-hidden">
-            <div className="absolute top-3 right-3 bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full">
-              POPULAR
+        </nav>
+
+        <div className="relative z-10 mx-auto flex max-w-6xl flex-col px-5 pb-10 pt-20 md:pt-28">
+          <div className="max-w-2xl">
+            <div className="mb-5 inline-flex items-center gap-2 rounded-full border border-orange-400/30 bg-orange-500/10 px-3 py-1.5 text-xs font-bold uppercase tracking-[0.18em] text-orange-200">
+              <Sparkles size={14} /> Built for fast hourly hiring
             </div>
-            <div className="flex items-center gap-3 mb-4">
-              <Zap className="text-white" size={24} />
-              <span className="font-bold text-lg text-white">Unlimited</span>
+            <h1 className="max-w-2xl text-5xl font-black leading-[0.95] tracking-normal text-white md:text-7xl">
+              Swipe-to-match recruiting.
+            </h1>
+            <p className="mt-6 max-w-xl text-lg leading-8 text-zinc-300">
+              Cruit turns jobs and candidates into clean, quick cards so both sides can move from interest to interview without bloated job boards or application drag.
+            </p>
+            <div className="mt-8 flex flex-col gap-3 sm:flex-row">
+              <Link href="/auth/signup?role=employer" className="inline-flex items-center justify-center gap-2 rounded-2xl bg-orange-500 px-6 py-4 text-base font-black text-white shadow-xl shadow-orange-500/20 transition hover:bg-orange-600">
+                Post a job <ArrowRight size={18} />
+              </Link>
+              <Link href="/auth/signup?role=candidate" className="inline-flex items-center justify-center rounded-2xl border border-white/15 bg-white/10 px-6 py-4 text-base font-bold text-white backdrop-blur transition hover:bg-white/15">
+                Find work
+              </Link>
             </div>
-            <div className="text-4xl font-black mb-1 text-white">$175 <span className="text-orange-100 text-lg font-normal">/month</span></div>
-            <p className="text-orange-100 text-sm mb-6">Post as many jobs as you need.</p>
-            <ul className="space-y-2 text-sm text-white">
-              {['Unlimited job postings', 'Candidate swipe feed', 'Match notifications', 'Swipe history saved', 'Priority placement'].map(f => (
-                <li key={f} className="flex items-center gap-2">
-                  <span className="text-white/70">✓</span> {f}
-                </li>
-              ))}
-            </ul>
-            <Link href="/auth/signup?role=employer&plan=unlimited" className="mt-8 block text-center bg-white text-orange-600 font-bold py-3 rounded-xl hover:bg-orange-50 transition-colors">
-              Start free trial
-            </Link>
+          </div>
+
+          <div className="mt-16 grid max-w-2xl grid-cols-3 gap-3">
+            {stats.map(([value, label]) => (
+              <div key={label} className="rounded-2xl border border-white/10 bg-white/[0.06] p-4 backdrop-blur">
+                <div className="text-3xl font-black text-white">{value}</div>
+                <div className="mt-1 text-xs font-semibold uppercase tracking-wide text-zinc-400">{label}</div>
+              </div>
+            ))}
           </div>
         </div>
-        <p className="text-slate-500 text-center text-xs mt-6">
-          Enterprise plans available for large volume hiring. Contact us.
-        </p>
       </section>
 
-      {/* Footer */}
-      <footer className="border-t border-slate-800 py-8 text-center text-slate-500 text-sm">
-        <span className="text-orange-400 font-black">CRUIT</span> &nbsp;·&nbsp; Indeed meets Tinder &nbsp;·&nbsp;
-        <span>Made for fast hiring</span>
+      <section className="mx-auto grid max-w-6xl gap-4 px-5 py-16 md:grid-cols-3">
+        {steps.map(({ title, desc, icon: Icon }) => (
+          <article key={title} className="rounded-2xl border border-zinc-800 bg-zinc-900/70 p-6">
+            <Icon className="mb-5 text-teal-400" size={28} />
+            <h2 className="text-xl font-black">{title}</h2>
+            <p className="mt-3 leading-7 text-zinc-400">{desc}</p>
+          </article>
+        ))}
+      </section>
+
+      <section className="border-y border-zinc-800 bg-zinc-900/50">
+        <div className="mx-auto grid max-w-6xl gap-8 px-5 py-16 md:grid-cols-[1fr_1.1fr] md:items-center">
+          <div>
+            <div className="mb-4 inline-flex items-center gap-2 rounded-full bg-teal-500/10 px-3 py-1 text-xs font-bold uppercase tracking-[0.18em] text-teal-300">
+              <Clock3 size={14} /> Less waiting
+            </div>
+            <h2 className="text-3xl font-black md:text-5xl">A hiring loop small teams can actually keep up with.</h2>
+          </div>
+          <div className="grid gap-3 sm:grid-cols-2">
+            <PricingCard title="Pay per post" price="$20" label="/ post" icon={BadgeDollarSign} features={['One active job posting', 'Candidate swipe feed', 'Match notifications', 'Saved swipe history']} />
+            <PricingCard title="Unlimited" price="$175" label="/ month" icon={Zap} featured features={['Unlimited job postings', 'Candidate swipe feed', 'Priority placement', 'Saved swipe history']} />
+          </div>
+        </div>
+      </section>
+
+      <footer className="mx-auto flex max-w-6xl flex-col gap-4 px-5 py-8 text-sm text-zinc-500 sm:flex-row sm:items-center sm:justify-between">
+        <BrandLockup compact />
+        <span>Candidate accounts are free. Employer plans can be changed anytime.</span>
       </footer>
     </main>
+  );
+}
+
+function PricingCard({
+  title,
+  price,
+  label,
+  icon: Icon,
+  features,
+  featured,
+}: {
+  title: string;
+  price: string;
+  label: string;
+  icon: LucideIcon;
+  features: string[];
+  featured?: boolean;
+}) {
+  return (
+    <article className={`rounded-2xl border p-5 ${featured ? 'border-orange-400 bg-orange-500 text-white' : 'border-zinc-800 bg-zinc-950 text-white'}`}>
+      <div className="mb-4 flex items-center gap-2 font-black">
+        <Icon size={20} />
+        {title}
+      </div>
+      <div className="text-4xl font-black">
+        {price} <span className={`text-base font-semibold ${featured ? 'text-orange-100' : 'text-zinc-500'}`}>{label}</span>
+      </div>
+      <ul className={`mt-5 space-y-2 text-sm ${featured ? 'text-orange-50' : 'text-zinc-400'}`}>
+        {features.map(feature => (
+          <li key={feature}>✓ {feature}</li>
+        ))}
+      </ul>
+    </article>
   );
 }

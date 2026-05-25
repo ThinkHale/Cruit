@@ -77,7 +77,7 @@ function NewJobModal({ visible, userId, onClose, onCreated }: { visible: boolean
 
   return (
     <Modal visible={visible} animationType="slide" presentationStyle="pageSheet">
-      <ScrollView style={{ flex: 1, backgroundColor: '#0f172a' }} contentContainerStyle={{ padding: 24, paddingTop: 40 }} keyboardShouldPersistTaps="handled">
+      <ScrollView style={{ flex: 1, backgroundColor: '#09090b' }} contentContainerStyle={{ padding: 24, paddingTop: 40 }} keyboardShouldPersistTaps="handled">
         <Text style={[styles.title, { marginBottom: 24 }]}>Post a Job</Text>
         {[
           { label: 'Job title *', value: title, set: setTitle, placeholder: 'Maintenance Technician' },
@@ -103,7 +103,7 @@ function NewJobModal({ visible, userId, onClose, onCreated }: { visible: boolean
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#0f172a' },
+  container: { flex: 1, backgroundColor: '#09090b' },
   header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', padding: 20, paddingTop: 12 },
   title: { color: '#fff', fontSize: 24, fontWeight: '900' },
   addBtn: { backgroundColor: '#f97316', paddingHorizontal: 16, paddingVertical: 8, borderRadius: 12 },

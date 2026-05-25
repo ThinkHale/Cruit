@@ -7,6 +7,7 @@ import { useAuth } from '@/context/AuthContext';
 import { CandidateProfile, Match } from '@/lib/types';
 import { SwipeCard } from '@/components/SwipeCard';
 import { MatchModal } from '@/components/MatchModal';
+import { BrandLockup } from '@/components/Brand';
 
 export default function EmployerSwipePage() {
   const { user } = useAuth();
@@ -87,9 +88,9 @@ export default function EmployerSwipePage() {
   if (candidates.length === 0) {
     return (
       <div className="h-screen flex flex-col items-center justify-center px-6 text-center gap-4">
-        <RotateCcw className="text-slate-600" size={48} />
+        <RotateCcw className="text-zinc-600" size={48} />
         <h2 className="text-xl font-bold">No new candidates</h2>
-        <p className="text-slate-400">More candidates will appear as they sign up.</p>
+        <p className="text-zinc-400">More candidates will appear as they sign up.</p>
       </div>
     );
   }
@@ -98,37 +99,56 @@ export default function EmployerSwipePage() {
 
   return (
     <>
-      <div className="h-screen flex flex-col">
-        <div className="flex items-center justify-between px-5 pt-10 pb-4 shrink-0">
-          <span className="text-2xl font-black text-orange-400">CRUIT</span>
-          <span className="text-slate-500 text-xs">{candidates.length} candidates</span>
+      <div className="min-h-screen px-4 pt-6 lg:grid lg:grid-cols-[minmax(360px,430px)_1fr] lg:gap-8 lg:px-8">
+        <div className="flex h-screen flex-col lg:sticky lg:top-0">
+          <div className="flex items-center justify-between pb-4 shrink-0">
+            <BrandLockup compact />
+            <span className="rounded-full bg-zinc-900 px-3 py-1 text-xs font-semibold text-zinc-400">{candidates.length} candidates</span>
+          </div>
+
+          <div className="relative mx-auto mb-4 w-full max-w-md flex-1">
+            {[...visible].reverse().map((candidate, reverseIdx) => {
+              const stackIndex = visible.length - 1 - reverseIdx;
+              return (
+                <SwipeCard key={candidate.id} stackIndex={stackIndex} onSwipe={dir => handleSwipe(dir, candidate)}>
+                  <CandidateCard candidate={candidate} />
+                </SwipeCard>
+              );
+            })}
+          </div>
+
+          <div className="flex items-center justify-center gap-8 pb-24 shrink-0 lg:pb-8">
+            <button
+              onClick={() => handleSwipe('left', candidates[0])}
+              className="flex h-16 w-16 items-center justify-center rounded-full border border-zinc-700 bg-zinc-900 text-red-400 shadow-lg transition-all hover:border-red-400 hover:bg-red-400/10"
+              aria-label="Pass"
+            >
+              <X size={28} strokeWidth={2.5} />
+            </button>
+            <button
+              onClick={() => handleSwipe('right', candidates[0])}
+              className="flex h-16 w-16 items-center justify-center rounded-full bg-orange-500 text-white shadow-lg shadow-orange-500/30 transition-all hover:bg-orange-600"
+              aria-label="Like"
+            >
+              <Heart size={26} strokeWidth={2.5} />
+            </button>
+          </div>
         </div>
 
-        <div className="flex-1 relative mx-4 mb-4">
-          {[...visible].reverse().map((candidate, reverseIdx) => {
-            const stackIndex = visible.length - 1 - reverseIdx;
-            return (
-              <SwipeCard key={candidate.id} stackIndex={stackIndex} onSwipe={dir => handleSwipe(dir, candidate)}>
-                <CandidateCard candidate={candidate} />
-              </SwipeCard>
-            );
-          })}
-        </div>
-
-        <div className="flex items-center justify-center gap-8 pb-24 shrink-0">
-          <button
-            onClick={() => handleSwipe('left', candidates[0])}
-            className="w-16 h-16 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center text-red-400 hover:border-red-400 hover:bg-red-400/10 transition-all shadow-lg"
-          >
-            <X size={28} strokeWidth={2.5} />
-          </button>
-          <button
-            onClick={() => handleSwipe('right', candidates[0])}
-            className="w-16 h-16 rounded-full bg-orange-500 flex items-center justify-center text-white hover:bg-orange-600 transition-all shadow-lg shadow-orange-500/30"
-          >
-            <Heart size={26} strokeWidth={2.5} />
-          </button>
-        </div>
+        <aside className="hidden py-10 lg:block">
+          <div className="rounded-3xl border border-zinc-800 bg-zinc-900/70 p-7">
+            <p className="text-sm font-bold uppercase tracking-[0.18em] text-teal-300">Employer feed</p>
+            <h1 className="mt-3 text-4xl font-black">Review candidates without resume clutter.</h1>
+            <p className="mt-4 max-w-xl leading-7 text-zinc-400">
+              Candidate cards highlight title, availability, skills, and location so employers can shortlist quickly.
+            </p>
+            <div className="mt-6 grid grid-cols-3 gap-3 text-center">
+              <div className="rounded-2xl bg-zinc-950 p-4"><div className="text-2xl font-black">{candidates.length}</div><div className="text-xs text-zinc-500">new</div></div>
+              <div className="rounded-2xl bg-zinc-950 p-4"><div className="text-2xl font-black">∞</div><div className="text-xs text-zinc-500">history</div></div>
+              <div className="rounded-2xl bg-zinc-950 p-4"><div className="text-2xl font-black">live</div><div className="text-xs text-zinc-500">chat</div></div>
+            </div>
+          </div>
+        </aside>
       </div>
 
       {newMatch && (
@@ -154,8 +174,8 @@ function CandidateCard({ candidate }: { candidate: CandidateProfile }) {
   };
 
   return (
-    <div className="h-full bg-slate-800 rounded-3xl overflow-hidden flex flex-col shadow-2xl cursor-grab active:cursor-grabbing">
-      <div className="bg-gradient-to-br from-indigo-600 to-purple-700 p-6 flex items-center gap-4">
+    <div className="h-full bg-zinc-900 rounded-3xl overflow-hidden flex flex-col shadow-2xl cursor-grab active:cursor-grabbing border border-zinc-800">
+      <div className="bg-gradient-to-br from-teal-500 to-zinc-800 p-6 flex items-center gap-4">
         <div className="w-16 h-16 rounded-2xl bg-white/20 flex items-center justify-center text-white font-black text-xl flex-shrink-0">
           {initials}
         </div>
@@ -167,11 +187,11 @@ function CandidateCard({ candidate }: { candidate: CandidateProfile }) {
 
       <div className="flex-1 p-5 space-y-4">
         <div className="grid grid-cols-2 gap-3">
-          <div className="bg-slate-700/60 rounded-xl p-3">
+          <div className="bg-zinc-800/80 rounded-xl p-3">
             <Briefcase className="text-orange-400 mb-1" size={16} />
             <p className="text-white font-bold text-sm">{candidate.experience_years}yr exp</p>
           </div>
-          <div className="bg-slate-700/60 rounded-xl p-3">
+          <div className="bg-zinc-800/80 rounded-xl p-3">
             <Clock className="text-blue-400 mb-1" size={16} />
             <p className="text-white font-bold text-sm leading-tight">
               {availabilityLabel[candidate.availability] ?? 'Flexible'}
@@ -180,7 +200,7 @@ function CandidateCard({ candidate }: { candidate: CandidateProfile }) {
         </div>
 
         {candidate.location && (
-          <div className="flex items-center gap-2 text-slate-400 text-sm">
+          <div className="flex items-center gap-2 text-zinc-400 text-sm">
             <MapPin size={14} />
             <span>{candidate.location}</span>
           </div>
@@ -188,10 +208,10 @@ function CandidateCard({ candidate }: { candidate: CandidateProfile }) {
 
         {candidate.skills.length > 0 && (
           <div>
-            <p className="text-slate-500 text-xs uppercase tracking-wider mb-2">Skills</p>
+            <p className="text-zinc-500 text-xs uppercase tracking-wider mb-2">Skills</p>
             <div className="flex flex-wrap gap-2">
               {candidate.skills.map(skill => (
-                <span key={skill} className="bg-slate-700 text-slate-200 text-xs px-3 py-1 rounded-full">
+                <span key={skill} className="bg-zinc-800 text-zinc-200 text-xs px-3 py-1 rounded-full">
                   {skill}
                 </span>
               ))}
@@ -200,7 +220,7 @@ function CandidateCard({ candidate }: { candidate: CandidateProfile }) {
         )}
 
         {candidate.bio && (
-          <p className="text-slate-400 text-sm leading-relaxed line-clamp-3">{candidate.bio}</p>
+          <p className="text-zinc-400 text-sm leading-relaxed line-clamp-3">{candidate.bio}</p>
         )}
       </div>
     </div>

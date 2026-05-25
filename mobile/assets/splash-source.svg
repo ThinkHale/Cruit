@@ -1,0 +1,8 @@
+<svg width="1242" height="2436" viewBox="0 0 1242 2436" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="1242" height="2436" fill="#09090B"/>
+  <rect x="331" y="875" width="580" height="580" rx="132" fill="#18181B"/>
+  <path d="M448 1247C429 1194 435 1136 466 1088C514 1012 610 984 694 1012C751 1031 792 1072 811 1126H716C702 1106 681 1092 654 1087C614 1080 574 1097 554 1131C532 1167 539 1211 571 1240C601 1267 645 1271 678 1250C690 1243 701 1233 709 1221H814C797 1275 757 1318 701 1340C600 1380 487 1352 448 1247Z" fill="#F97316"/>
+  <path d="M755 967L598 1176H698L635 1366L805 1136H704L755 967Z" fill="#14B8A6"/>
+  <text x="621" y="1538" text-anchor="middle" fill="#FFFFFF" font-family="Inter, Arial, sans-serif" font-size="96" font-weight="900" letter-spacing="0">Cruit</text>
+  <text x="621" y="1610" text-anchor="middle" fill="#FDBA74" font-family="Inter, Arial, sans-serif" font-size="30" font-weight="700" letter-spacing="8">FAST HIRING</text>
+</svg>

@@ -53,7 +53,7 @@ export default function NewJobPage() {
   }
 
   return (
-    <div className="px-4 pt-10 pb-8">
+    <div className="mx-auto max-w-2xl px-4 pt-10 pb-8 lg:px-8">
       <div className="flex items-center gap-3 mb-6">
         <button onClick={() => router.back()} className="text-slate-400 hover:text-white">
           <ArrowLeft size={22} />

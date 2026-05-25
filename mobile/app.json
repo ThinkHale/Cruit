@@ -8,22 +8,25 @@
     "scheme": "cruit",
     "userInterfaceStyle": "dark",
     "splash": {
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#0f172a"
+      "backgroundColor": "#09090b"
     },
     "ios": {
       "supportsTablet": false,
-      "bundleIdentifier": "com.cruit.app"
+      "bundleIdentifier": "com.cruit.app",
+      "buildNumber": "1"
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#0f172a"
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#09090b"
       },
-      "package": "com.cruit.app"
+      "package": "com.cruit.app",
+      "versionCode": 1
     },
     "plugins": [
-      "expo-router",
-      "react-native-reanimated"
+      "expo-router"
     ],
     "experiments": {
       "typedRoutes": true

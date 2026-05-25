@@ -146,8 +146,8 @@ function JobCard({ job }: { job: JobPosting }) {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#0f172a' },
-  center: { flex: 1, backgroundColor: '#0f172a', justifyContent: 'center', alignItems: 'center' },
+  container: { flex: 1, backgroundColor: '#09090b' },
+  center: { flex: 1, backgroundColor: '#09090b', justifyContent: 'center', alignItems: 'center' },
   header: { flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 20, paddingTop: 8, paddingBottom: 12 },
   logo: { color: '#f97316', fontSize: 24, fontWeight: '900' },
   count: { color: '#64748b', fontSize: 12 },

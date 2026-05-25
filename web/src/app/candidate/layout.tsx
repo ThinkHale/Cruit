@@ -18,15 +18,15 @@ export default function CandidateLayout({ children }: { children: React.ReactNod
 
   if (loading || !user) {
     return (
-      <div className="min-h-screen bg-slate-900 flex items-center justify-center">
+      <div className="min-h-screen bg-zinc-950 flex items-center justify-center">
         <div className="w-8 h-8 border-2 border-orange-500 border-t-transparent rounded-full animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-slate-900 max-w-sm mx-auto relative">
-      <main className="pb-20">{children}</main>
+    <div className="min-h-screen bg-zinc-950 lg:pl-28">
+      <main className="mx-auto w-full max-w-6xl pb-24 lg:pb-8">{children}</main>
       <BottomNav />
     </div>
   );

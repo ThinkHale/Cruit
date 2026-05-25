@@ -4,7 +4,7 @@ import {
   Platform, Alert, ScrollView,
 } from 'react-native';
 import { useRouter } from 'expo-router';
-import { supabase } from '@/lib/supabase';
+import { isSupabaseConfigured, supabase } from '@/lib/supabase';
 
 type Role = 'employer' | 'candidate';
 
@@ -18,6 +18,10 @@ export default function SignupScreen() {
 
   async function handleSignup() {
     if (!name.trim()) { Alert.alert('Name required'); return; }
+    if (!isSupabaseConfigured) {
+      Alert.alert('Supabase required', 'Set EXPO_PUBLIC_SUPABASE_URL and EXPO_PUBLIC_SUPABASE_ANON_KEY before testing sign-up.');
+      return;
+    }
     setLoading(true);
     const { data, error } = await supabase.auth.signUp({ email, password });
     if (error || !data.user) {
@@ -37,7 +41,7 @@ export default function SignupScreen() {
   }
 
   return (
-    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={{ flex: 1, backgroundColor: '#0f172a' }}>
+    <KeyboardAvoidingView behavior={Platform.OS === 'ios' ? 'padding' : undefined} style={{ flex: 1, backgroundColor: '#09090b' }}>
       <ScrollView contentContainerStyle={styles.container} keyboardShouldPersistTaps="handled">
         <Text style={styles.logo}>CRUIT</Text>
         <Text style={styles.heading}>Create account</Text>

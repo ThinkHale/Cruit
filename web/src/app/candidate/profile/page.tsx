@@ -64,7 +64,7 @@ export default function CandidateProfilePage() {
   );
 
   return (
-    <div className="px-4 pt-10 pb-8">
+    <div className="mx-auto max-w-2xl px-4 pt-10 pb-8 lg:px-8">
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-black">My Profile</h1>
         <button onClick={signOut} className="flex items-center gap-1.5 text-slate-400 hover:text-white text-sm">

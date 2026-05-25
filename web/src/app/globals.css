@@ -5,12 +5,26 @@
 html,
 body {
   height: 100%;
-  background-color: #0f172a;
+  background-color: #09090b;
   color: white;
+}
+
+body {
+  background:
+    linear-gradient(180deg, rgba(24, 24, 27, 0.72) 0%, rgba(9, 9, 11, 1) 42%),
+    #09090b;
+}
+
+* {
+  box-sizing: border-box;
 }
 
 /* Prevent page scroll during card drag */
 .no-select {
   -webkit-user-select: none;
   user-select: none;
+}
+
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom);
 }

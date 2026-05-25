@@ -36,7 +36,7 @@ export default function EmployerJobsPage() {
   }
 
   return (
-    <div className="px-4 pt-10">
+    <div className="mx-auto max-w-4xl px-4 pt-10 lg:px-8">
       <div className="flex items-center justify-between mb-6">
         <h1 className="text-2xl font-black">My Jobs</h1>
         <Link
@@ -55,7 +55,7 @@ export default function EmployerJobsPage() {
 
       {!loading && jobs.length === 0 && (
         <div className="text-center py-16">
-          <p className="text-slate-400 mb-4">You haven't posted any jobs yet.</p>
+          <p className="text-slate-400 mb-4">No jobs posted yet.</p>
           <Link href="/employer/jobs/new" className="text-orange-400 hover:underline font-medium">
             Post your first job →
           </Link>

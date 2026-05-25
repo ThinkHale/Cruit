@@ -11,7 +11,7 @@ export default function CandidateMatchesPage() {
   const [tab, setTab] = useState<'matches' | 'history'>('matches');
 
   return (
-    <div className="px-4 pt-10">
+    <div className="mx-auto max-w-4xl px-4 pt-10 lg:px-8">
       <h1 className="text-2xl font-black mb-4">Activity</h1>
       <div className="flex bg-slate-800 rounded-xl p-1 mb-6">
         <button
@@ -162,7 +162,7 @@ function SwipeHistory({ userId }: { userId?: string }) {
 
   return (
     <div className="space-y-2">
-      <p className="text-slate-500 text-xs mb-3">Jobs you passed on — they're saved here if you change your mind.</p>
+      <p className="text-slate-500 text-xs mb-3">Jobs you passed on are saved here if you change your mind.</p>
       {passed.map(job => (
         <div key={job.id} className="bg-slate-800 rounded-xl p-4 flex items-center justify-between">
           <div>

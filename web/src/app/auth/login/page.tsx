@@ -3,7 +3,8 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import { supabase } from '@/lib/supabase';
+import { BrandLockup } from '@/components/Brand';
+import { isSupabaseConfigured, supabase } from '@/lib/supabase';
 
 export default function LoginPage() {
   const router = useRouter();
@@ -15,6 +16,10 @@ export default function LoginPage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError('');
+    if (!isSupabaseConfigured) {
+      setError('Supabase env vars are required before sign-in can be tested.');
+      return;
+    }
     setLoading(true);
     const { data, error } = await supabase.auth.signInWithPassword({ email, password });
     if (error) {
@@ -34,43 +39,44 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-900 flex flex-col items-center justify-center px-4">
-      <Link href="/" className="text-3xl font-black text-orange-400 mb-10">CRUIT</Link>
-      <div className="bg-slate-800 rounded-2xl p-8 w-full max-w-sm">
-        <h1 className="text-2xl font-bold mb-6">Welcome back</h1>
+    <div className="flex min-h-screen flex-col items-center justify-center bg-zinc-950 px-4 py-10">
+      <div className="mb-10"><BrandLockup /></div>
+      <div className="w-full max-w-sm rounded-3xl border border-zinc-800 bg-zinc-900/80 p-7 shadow-2xl">
+        <h1 className="text-2xl font-black mb-2">Welcome back</h1>
+        <p className="mb-6 text-sm leading-6 text-zinc-400">Sign in to keep swiping, matching, and scheduling.</p>
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm text-slate-400 mb-1">Email</label>
+            <label className="block text-sm text-zinc-400 mb-1">Email</label>
             <input
               type="email"
               value={email}
               onChange={e => setEmail(e.target.value)}
               required
-              className="w-full bg-slate-700 border border-slate-600 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-orange-500 transition-colors"
+              className="w-full rounded-2xl border border-zinc-700 bg-zinc-950 px-4 py-3 text-white placeholder-zinc-600 transition-colors focus:border-orange-500 focus:outline-none"
               placeholder="you@example.com"
             />
           </div>
           <div>
-            <label className="block text-sm text-slate-400 mb-1">Password</label>
+            <label className="block text-sm text-zinc-400 mb-1">Password</label>
             <input
               type="password"
               value={password}
               onChange={e => setPassword(e.target.value)}
               required
-              className="w-full bg-slate-700 border border-slate-600 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-orange-500 transition-colors"
-              placeholder="••••••••"
+              className="w-full rounded-2xl border border-zinc-700 bg-zinc-950 px-4 py-3 text-white placeholder-zinc-600 transition-colors focus:border-orange-500 focus:outline-none"
+              placeholder="Password"
             />
           </div>
           {error && <p className="text-red-400 text-sm">{error}</p>}
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-orange-500 hover:bg-orange-600 disabled:opacity-50 text-white font-bold py-3 rounded-xl transition-colors"
+            className="w-full rounded-2xl bg-orange-500 py-3 font-black text-white transition-colors hover:bg-orange-600 disabled:opacity-50"
           >
             {loading ? 'Signing in…' : 'Sign in'}
           </button>
         </form>
-        <p className="text-slate-400 text-sm text-center mt-4">
+        <p className="text-zinc-400 text-sm text-center mt-5">
           No account?{' '}
           <Link href="/auth/signup" className="text-orange-400 hover:underline">Sign up free</Link>
         </p>

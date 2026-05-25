@@ -91,7 +91,7 @@ export default function EmployerMatchesScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#0f172a' },
+  container: { flex: 1, backgroundColor: '#09090b' },
   header: { flexDirection: 'row', alignItems: 'center', padding: 16, paddingTop: 8 },
   title: { color: '#fff', fontSize: 22, fontWeight: '900' },
   card: { backgroundColor: '#1e293b', borderRadius: 16, padding: 16, flexDirection: 'row', alignItems: 'center' },

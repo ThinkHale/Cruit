@@ -3,7 +3,8 @@
 import { useState, Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import Link from 'next/link';
-import { supabase } from '@/lib/supabase';
+import { BrandLockup } from '@/components/Brand';
+import { isSupabaseConfigured, supabase } from '@/lib/supabase';
 import { UserRole } from '@/lib/types';
 
 function SignupForm() {
@@ -21,6 +22,10 @@ function SignupForm() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError('');
+    if (!isSupabaseConfigured) {
+      setError('Supabase env vars are required before sign-up can be tested.');
+      return;
+    }
     setLoading(true);
 
     const { data, error: signUpError } = await supabase.auth.signUp({ email, password });
@@ -32,37 +37,49 @@ function SignupForm() {
 
     const userId = data.user.id;
 
-    // Insert base profile
-    await supabase.from('user_profiles').insert({ id: userId, role });
+    const { error: profileError } = await supabase.from('user_profiles').insert({ id: userId, role });
+    if (profileError) {
+      setError(profileError.message);
+      setLoading(false);
+      return;
+    }
 
-    // Insert role-specific profile
     if (role === 'employer') {
-      await supabase.from('employer_profiles').insert({ id: userId, company_name: name });
+      const { error } = await supabase.from('employer_profiles').insert({ id: userId, company_name: name });
+      if (error) {
+        setError(error.message);
+        setLoading(false);
+        return;
+      }
       router.push('/employer/profile?onboarding=1');
     } else {
-      await supabase.from('candidate_profiles').insert({ id: userId, full_name: name });
+      const { error } = await supabase.from('candidate_profiles').insert({ id: userId, full_name: name });
+      if (error) {
+        setError(error.message);
+        setLoading(false);
+        return;
+      }
       router.push('/candidate/profile?onboarding=1');
     }
   }
 
   return (
-    <div className="min-h-screen bg-slate-900 flex flex-col items-center justify-center px-4">
-      <Link href="/" className="text-3xl font-black text-orange-400 mb-10">CRUIT</Link>
-      <div className="bg-slate-800 rounded-2xl p-8 w-full max-w-sm">
-        <h1 className="text-2xl font-bold mb-2">Create account</h1>
-        <p className="text-slate-400 text-sm mb-6">Free for candidates. Employers get 7-day trial.</p>
+    <div className="flex min-h-screen flex-col items-center justify-center bg-zinc-950 px-4 py-10">
+      <div className="mb-10"><BrandLockup /></div>
+      <div className="w-full max-w-sm rounded-3xl border border-zinc-800 bg-zinc-900/80 p-7 shadow-2xl">
+        <h1 className="text-2xl font-black mb-2">Create account</h1>
+        <p className="text-zinc-400 text-sm mb-6">Free for candidates. Employers get a 7-day trial.</p>
 
-        {/* Role selector */}
         <div className="grid grid-cols-2 gap-2 mb-6">
           {(['candidate', 'employer'] as UserRole[]).map(r => (
             <button
               key={r}
               type="button"
               onClick={() => setRole(r)}
-              className={`py-3 rounded-xl text-sm font-semibold transition-colors capitalize ${
+              className={`rounded-2xl py-3 text-sm font-bold transition-colors capitalize ${
                 role === r
                   ? 'bg-orange-500 text-white'
-                  : 'bg-slate-700 text-slate-400 hover:bg-slate-600'
+                  : 'bg-zinc-800 text-zinc-400 hover:bg-zinc-700'
               }`}
             >
               {r === 'employer' ? 'Employer' : 'Job Seeker'}
@@ -72,7 +89,7 @@ function SignupForm() {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-sm text-slate-400 mb-1">
+              <label className="block text-sm text-zinc-400 mb-1">
               {role === 'employer' ? 'Company name' : 'Your name'}
             </label>
             <input
@@ -80,43 +97,43 @@ function SignupForm() {
               value={name}
               onChange={e => setName(e.target.value)}
               required
-              className="w-full bg-slate-700 border border-slate-600 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-orange-500 transition-colors"
+              className="w-full rounded-2xl border border-zinc-700 bg-zinc-950 px-4 py-3 text-white placeholder-zinc-600 transition-colors focus:border-orange-500 focus:outline-none"
               placeholder={role === 'employer' ? 'Acme Corp' : 'Jane Smith'}
             />
           </div>
           <div>
-            <label className="block text-sm text-slate-400 mb-1">Email</label>
+            <label className="block text-sm text-zinc-400 mb-1">Email</label>
             <input
               type="email"
               value={email}
               onChange={e => setEmail(e.target.value)}
               required
-              className="w-full bg-slate-700 border border-slate-600 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-orange-500 transition-colors"
+              className="w-full rounded-2xl border border-zinc-700 bg-zinc-950 px-4 py-3 text-white placeholder-zinc-600 transition-colors focus:border-orange-500 focus:outline-none"
               placeholder="you@example.com"
             />
           </div>
           <div>
-            <label className="block text-sm text-slate-400 mb-1">Password</label>
+            <label className="block text-sm text-zinc-400 mb-1">Password</label>
             <input
               type="password"
               value={password}
               onChange={e => setPassword(e.target.value)}
               required
               minLength={6}
-              className="w-full bg-slate-700 border border-slate-600 rounded-xl px-4 py-3 text-white placeholder-slate-500 focus:outline-none focus:border-orange-500 transition-colors"
-              placeholder="••••••••"
+              className="w-full rounded-2xl border border-zinc-700 bg-zinc-950 px-4 py-3 text-white placeholder-zinc-600 transition-colors focus:border-orange-500 focus:outline-none"
+              placeholder="Password"
             />
           </div>
           {error && <p className="text-red-400 text-sm">{error}</p>}
           <button
             type="submit"
             disabled={loading}
-            className="w-full bg-orange-500 hover:bg-orange-600 disabled:opacity-50 text-white font-bold py-3 rounded-xl transition-colors"
+            className="w-full rounded-2xl bg-orange-500 py-3 font-black text-white transition-colors hover:bg-orange-600 disabled:opacity-50"
           >
             {loading ? 'Creating account…' : 'Create account'}
           </button>
         </form>
-        <p className="text-slate-400 text-sm text-center mt-4">
+        <p className="text-zinc-400 text-sm text-center mt-5">
           Already have an account?{' '}
           <Link href="/auth/login" className="text-orange-400 hover:underline">Sign in</Link>
         </p>

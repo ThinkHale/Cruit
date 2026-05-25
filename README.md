@@ -49,6 +49,7 @@ cp .env.local.example .env.local
 # Fill in NEXT_PUBLIC_SUPABASE_URL and NEXT_PUBLIC_SUPABASE_ANON_KEY
 npm install
 npm run dev          # http://localhost:3000
+npm run build        # static export into web/out
 ```
 
 ### 3. Mobile app
@@ -62,6 +63,38 @@ npx expo start       # Scan QR with Expo Go app
 ```
 
 > **Note:** `react-native-reanimated` requires a development build for production. Use `npx expo run:ios` or `npx expo run:android` for a full build.
+
+## Release/testing checklist
+
+### Web via GitHub Pages
+
+1. Add repository secrets:
+   - `NEXT_PUBLIC_SUPABASE_URL`
+   - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+2. In GitHub, enable **Settings → Pages → Source: GitHub Actions**.
+3. Push to `main` or run the **Deploy web to GitHub Pages** workflow manually.
+
+The web app is configured for a project page at `/Cruit` by default. Override with:
+
+```bash
+cd web
+NEXT_PUBLIC_BASE_PATH=/your-repo-name npm run build:pages
+```
+
+### iOS and Google Play testing
+
+The Expo app includes store-ready identifiers and generated icon/splash assets.
+
+```bash
+cd mobile
+cp .env.example .env
+npm install
+npm run typecheck
+npm run build:ios:preview       # internal TestFlight-ready build via EAS
+npm run build:android:preview   # internal APK build for Play testing
+```
+
+Before store submission, update `mobile/app.json` if you want a different bundle identifier/package than `com.cruit.app`, then run the production EAS build and submit scripts.
 
 ## Key features
 

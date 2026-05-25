@@ -13,6 +13,16 @@ const AVAIL = [
   { value: 'flexible', label: 'Flexible' },
 ] as const;
 
+const TEXT_FIELDS: Array<{
+  label: string;
+  key: 'full_name' | 'title' | 'location';
+  placeholder: string;
+}> = [
+  { label: 'Full name *', key: 'full_name', placeholder: 'Jane Smith' },
+  { label: 'Job title', key: 'title', placeholder: 'Maintenance Technician' },
+  { label: 'Location', key: 'location', placeholder: 'St. Louis, MO' },
+];
+
 export default function CandidateProfileScreen() {
   const { user } = useAuth();
   const [profile, setProfile] = useState<Partial<CandidateProfile> & { skills: string[] }>({ skills: [] });
@@ -64,16 +74,12 @@ export default function CandidateProfileScreen() {
           </TouchableOpacity>
         </View>
 
-        {[
-          { label: 'Full name *', key: 'full_name', placeholder: 'Jane Smith' },
-          { label: 'Job title', key: 'title', placeholder: 'Maintenance Technician' },
-          { label: 'Location', key: 'location', placeholder: 'St. Louis, MO' },
-        ].map(f => (
+        {TEXT_FIELDS.map(f => (
           <View key={f.key} style={{ marginBottom: 14 }}>
             <Text style={styles.label}>{f.label}</Text>
             <TextInput
               style={styles.input}
-              value={(profile as Record<string, string>)[f.key] ?? ''}
+              value={profile[f.key] ?? ''}
               onChangeText={v => setProfile(p => ({ ...p, [f.key]: v }))}
               placeholder={f.placeholder}
               placeholderTextColor="#64748b"
@@ -138,7 +144,7 @@ export default function CandidateProfileScreen() {
 }
 
 const styles = StyleSheet.create({
-  container: { flex: 1, backgroundColor: '#0f172a' },
+  container: { flex: 1, backgroundColor: '#09090b' },
   title: { color: '#fff', fontSize: 22, fontWeight: '900' },
   label: { color: '#94a3b8', fontSize: 13, marginBottom: 6 },
   input: { backgroundColor: '#1e293b', borderWidth: 1, borderColor: '#334155', borderRadius: 14, paddingHorizontal: 14, paddingVertical: 12, color: '#fff', fontSize: 15 },

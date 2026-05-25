@@ -11,7 +11,7 @@ export default function EmployerMatchesPage() {
   const [tab, setTab] = useState<'matches' | 'history'>('matches');
 
   return (
-    <div className="px-4 pt-10">
+    <div className="mx-auto max-w-4xl px-4 pt-10 lg:px-8">
       <h1 className="text-2xl font-black mb-4">Activity</h1>
       <div className="flex bg-slate-800 rounded-xl p-1 mb-6">
         <button
@@ -119,7 +119,7 @@ function MessageThread({ matchId, userId }: { matchId: string; userId: string })
           onClick={() => setInput(defaultMsg)}
           className="text-xs text-orange-400 mt-3 hover:underline"
         >
-          Use suggested message: "{defaultMsg}"
+          Use suggested message
         </button>
       )}
       <div className="max-h-48 overflow-y-auto py-2 space-y-2">
