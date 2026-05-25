@@ -17,48 +17,46 @@ function SignupForm() {
   const [password, setPassword] = useState('');
   const [name, setName] = useState('');
   const [error, setError] = useState('');
+  const [success, setSuccess] = useState('');
   const [loading, setLoading] = useState(false);
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError('');
+    setSuccess('');
     if (!isSupabaseConfigured) {
       setError('Supabase env vars are required before sign-up can be tested.');
       return;
     }
     setLoading(true);
 
-    const { data, error: signUpError } = await supabase.auth.signUp({ email, password });
+    const trimmedName = name.trim();
+    const { data, error: signUpError } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          role,
+          name: trimmedName,
+          company_name: role === 'employer' ? trimmedName : undefined,
+        },
+      },
+    });
     if (signUpError || !data.user) {
       setError(signUpError?.message ?? 'Sign-up failed');
       setLoading(false);
       return;
     }
 
-    const userId = data.user.id;
-
-    const { error: profileError } = await supabase.from('user_profiles').insert({ id: userId, role });
-    if (profileError) {
-      setError(profileError.message);
+    if (!data.session) {
+      setSuccess('Account created. Check your email to confirm your account, then sign in.');
       setLoading(false);
       return;
     }
 
     if (role === 'employer') {
-      const { error } = await supabase.from('employer_profiles').insert({ id: userId, company_name: name });
-      if (error) {
-        setError(error.message);
-        setLoading(false);
-        return;
-      }
       router.push('/employer/profile?onboarding=1');
     } else {
-      const { error } = await supabase.from('candidate_profiles').insert({ id: userId, full_name: name });
-      if (error) {
-        setError(error.message);
-        setLoading(false);
-        return;
-      }
       router.push('/candidate/profile?onboarding=1');
     }
   }
@@ -125,6 +123,7 @@ function SignupForm() {
             />
           </div>
           {error && <p className="text-red-400 text-sm">{error}</p>}
+          {success && <p className="text-teal-300 text-sm">{success}</p>}
           <button
             type="submit"
             disabled={loading}

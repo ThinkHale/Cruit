@@ -8,7 +8,8 @@
     "build:pages": "NEXT_PUBLIC_BASE_PATH=${NEXT_PUBLIC_BASE_PATH:-/Cruit} next build",
     "start": "npx serve@latest out",
     "lint": "eslint .",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "seed:test-users": "node scripts/seed-test-users.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.5.0",

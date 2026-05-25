@@ -23,19 +23,34 @@ export default function SignupScreen() {
       return;
     }
     setLoading(true);
-    const { data, error } = await supabase.auth.signUp({ email, password });
+    const trimmedName = name.trim();
+    const { data, error } = await supabase.auth.signUp({
+      email,
+      password,
+      options: {
+        data: {
+          role,
+          name: trimmedName,
+          company_name: role === 'employer' ? trimmedName : undefined,
+        },
+      },
+    });
     if (error || !data.user) {
       Alert.alert('Sign up failed', error?.message ?? 'Unknown error');
       setLoading(false);
       return;
     }
-    const userId = data.user.id;
-    await supabase.from('user_profiles').insert({ id: userId, role });
+
+    if (!data.session) {
+      setLoading(false);
+      Alert.alert('Check your email', 'Account created. Confirm your email, then sign in.');
+      router.replace('/auth/login');
+      return;
+    }
+
     if (role === 'employer') {
-      await supabase.from('employer_profiles').insert({ id: userId, company_name: name });
       router.replace('/(employer)/profile');
     } else {
-      await supabase.from('candidate_profiles').insert({ id: userId, full_name: name });
       router.replace('/(candidate)/profile');
     }
   }

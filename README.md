@@ -96,6 +96,27 @@ npm run build:android:preview   # internal APK build for Play testing
 
 Before store submission, update `mobile/app.json` if you want a different bundle identifier/package than `com.cruit.app`, then run the production EAS build and submit scripts.
 
+## Seed usability test accounts
+
+To create login-able Supabase Auth users plus sample companies, profiles, and jobs, add your service role key locally:
+
+```bash
+cd web
+printf "SUPABASE_SERVICE_ROLE_KEY=your-service-role-key\n" > .env.seed
+npm run seed:test-users
+```
+
+Seeded accounts all use password `CruitTest123!`:
+
+| Role | Email |
+|---|---|
+| Employer | employer.riverbend@cruit.test |
+| Employer | employer.northstar@cruit.test |
+| Employer | employer.hearthside@cruit.test |
+| Candidate | candidate.ava@cruit.test |
+| Candidate | candidate.marcus@cruit.test |
+| Candidate | candidate.priya@cruit.test |
+
 ## Key features
 
 - **Swipe UI** — drag cards left/right on web and mobile; tap buttons for accessibility
